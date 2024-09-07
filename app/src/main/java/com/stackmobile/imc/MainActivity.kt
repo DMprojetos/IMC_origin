@@ -41,7 +41,7 @@ fun IMCCalculatorApp() {
     var message by remember { mutableStateOf("") }
     var color by remember { mutableStateOf(Color.White) }
     var isMale by remember { mutableStateOf(true) } // Estado para alternar gênero
-    var imageResource by remember { mutableStateOf(R.drawable.bmi) } // Estado para alterar imagem
+    var imageResource by remember { mutableStateOf(R.drawable.fotomasc3) } // Estado para alterar imagem
 
     // IMC Calculation
     LaunchedEffect(weight, height, isMale) {
@@ -55,6 +55,7 @@ fun IMCCalculatorApp() {
                     message = "Valores inválidos"
                     color = Color.Gray // Cor para indicar erro
                     imageResource = R.drawable.bmi // Substitua com uma imagem de erro apropriada
+
                     return@LaunchedEffect
                 }
 
@@ -63,32 +64,43 @@ fun IMCCalculatorApp() {
                 // Seleciona imagem e mensagem baseada no IMC e no gênero
                 when {
                     imc!! < 18.5 -> {
-                        message = if (isMale) "Abaixo do peso\n IMC: <18,5" else "Abaixo do peso\n IMC: <18,5"
+                        message =
+                            if (isMale) "Abaixo do peso\n IMC: <18,5" else "Abaixo do peso\n IMC: <18,5"
                         color = Color(0xFF9C27B0) // Purple
                         imageResource = if (isMale) R.drawable.fotofem5 else R.drawable.fotomasc4
                     }
+
                     imc!! in 18.5..24.9 -> {
-                        message = if (isMale) "Peso normal\n IMC: 18,5 - 24,9" else "Peso normal\n IMC: 18,5 - 24,9"
+                        message =
+                            if (isMale) "Peso normal\n IMC: 18,5 - 24,9" else "Peso normal\n IMC: 18,5 - 24,9"
                         color = Color(0xFF4CAF50) // Green
                         imageResource = if (isMale) R.drawable.fotofem4 else R.drawable.fotomasc3
                     }
+
                     imc!! in 25.0..29.9 -> {
-                        message = if (isMale) "Sobrepeso\n IMC: 25 - 29,9" else "Sobrepeso\n IMC: 25 - 29,9"
+                        message =
+                            if (isMale) "Sobrepeso\n IMC: 25 - 29,9" else "Sobrepeso\n IMC: 25 - 29,9"
                         color = Color(0xFFFFEB3B) // Yellow
                         imageResource = if (isMale) R.drawable.fotofem3 else R.drawable.fotomasc2
                     }
+
                     imc!! in 30.0..34.9 -> {
-                        message = if (isMale) "Obesidade Grau I\n IMC: 30 - 34,9" else "Obesidade Grau I\n IMC: 30 - 34,9"
+                        message =
+                            if (isMale) "Obesidade Grau I\n IMC: 30 - 34,9" else "Obesidade Grau I\n IMC: 30 - 34,9"
                         color = Color(0xFFFFEB3B) // Yellow
                         imageResource = if (isMale) R.drawable.fotofem2 else R.drawable.fotomasc1
                     }
+
                     imc!! in 35.0..39.9 -> {
-                        message = if (isMale) "Obesidade Grau II\n IMC: 35 - 39,9" else "Obesidade Grau II\n IMC: 35 - 39,9"
+                        message =
+                            if (isMale) "Obesidade Grau II\n IMC: 35 - 39,9" else "Obesidade Grau II\n IMC: 35 - 39,9"
                         color = Color(0xFFF44336) // Red
                         imageResource = if (isMale) R.drawable.fotofem1 else R.drawable.fotomasc1
                     }
+
                     else -> {
-                        message = if (isMale) "Obesidade Grau III ou Mórbida \n IMC: >40" else "Obesidade Grau III ou Mórbida \n IMC: >40"
+                        message =
+                            if (isMale) "Obesidade Grau III ou Mórbida \n IMC: >40" else "Obesidade Grau III ou Mórbida \n IMC: >40"
                         color = Color(0xFFF44336) // Red
                         imageResource = if (isMale) R.drawable.fotofem1 else R.drawable.fotomasc1
                     }
@@ -137,7 +149,7 @@ fun IMCCalculatorApp() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(1.dp)
             .background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -157,7 +169,7 @@ fun IMCCalculatorApp() {
                 Icon(
                     painter = painterResource(id = R.drawable.femininoicon),
                     contentDescription = "Masculino",
-                    tint = if (isMale) Color.Blue else Color.White // Azul se masculino for selecionado
+                    tint = if (isMale) Color.Green else Color.White // Azul se masculino for selecionado
                 )
             }
 
@@ -169,7 +181,7 @@ fun IMCCalculatorApp() {
                 Icon(
                     painter = painterResource(id = R.drawable.masculinoicon),
                     contentDescription = "Feminino",
-                    tint = if (!isMale) Color.Blue else Color.White // Azul se feminino for selecionado
+                    tint = if (!isMale) Color.Green else Color.White // Azul se feminino for selecionado
                 )
             }
         }
@@ -179,13 +191,13 @@ fun IMCCalculatorApp() {
             painter = painterResource(id = imageResource),
             contentDescription = "Imagem baseada no IMC e gênero",
             modifier = Modifier
-                .size(250.dp)
+                .size(300.dp)
                 .padding(bottom = 16.dp)
         )
         Text(
             text = imc?.let { "IMC: %.2f".format(it) } ?: "IMC: 0.0",
             color = Color.White,
-            fontSize = 24.sp,
+            fontSize = 30.sp,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -196,78 +208,82 @@ fun IMCCalculatorApp() {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        TextField(
-            value = height,
-            onValueChange = { height = it },
-            label = { Text("Altura (cm)", color = Color.Gray) },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
-            ),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent, // Fundo transparente para aplicar o gradiente
-                focusedIndicatorColor = Color(0xFF03A9F4), // Indicador azul quando focado
-                unfocusedIndicatorColor = Color(0xFFB0BEC5), // Indicador cinza quando desfocado
-                cursorColor = Color(0xFF03A9F4), // Cor do cursor
-                focusedLabelColor = Color(0xFF03A9F4), // Cor da label quando focada
-                unfocusedLabelColor = Color.Gray // Cor da label quando desfocada
-            ),
-            textStyle = TextStyle(
-                color = Color.Black, // Cor do texto
-                fontSize = 14.sp // Tamanho da fonte menor
-            ),
-            shape = RoundedCornerShape(16.dp), // Bordas arredondadas menores
+        Row(
             modifier = Modifier
-                .width(150.dp) // Largura fixa para diminuir o tamanho
-                .align(Alignment.CenterHorizontally) // Centralizar horizontalmente
-                .padding(bottom = 4.dp) // Espaçamento externo reduzido
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(Color(0xFFE3F2FD), Color(0xFFBBDEFB))
-                    ),
-                    shape = RoundedCornerShape(16.dp) // Usando o mesmo arredondamento
-                )
-                .padding(horizontal = 8.dp, vertical = 6.dp) // Espaçamento interno ajustado
-        )
+                .fillMaxWidth()
+                .padding(0.dp), // Remove o espaçamento externo
+            horizontalArrangement = Arrangement.Center, // Centraliza os campos horizontalmente
+            verticalAlignment = Alignment.CenterVertically // Centraliza verticalmente
+        ) {
+            // Height Input
+            TextField(
+                value = height,
+                onValueChange = { height = it },
+                label = { Text("Altura (cm)", color = Color.Gray) },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.Transparent,
+                    focusedIndicatorColor = Color(0xFF03A9F4),
+                    unfocusedIndicatorColor = Color(0xFFB0BEC5),
+                    cursorColor = Color(0xFF03A9F4),
+                    focusedLabelColor = Color(0xFF03A9F4),
+                    unfocusedLabelColor = Color.Gray
+                ),
+                textStyle = TextStyle(
+                    color = Color.White,
+                    fontSize = 14.sp
+                ),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier
+                    .width(150.dp)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(Color(0x9A121212), Color(0x9A121212))
+                        ),
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(horizontal = 0.dp, vertical = 6.dp) // Remove padding lateral
+            )
 
+            Spacer(modifier = Modifier.width(8.dp)) // Pequeno espaçamento entre os campos
 
+            // Weight Input
+            TextField(
+                value = weight,
+                onValueChange = { weight = it },
+                label = { Text("Peso (kg)") },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.Transparent,
+                    focusedIndicatorColor = Color(0xFF03A9F4),
+                    unfocusedIndicatorColor = Color(0xFFB0BEC5),
+                    cursorColor = Color(0xFF03A9F4),
+                    focusedLabelColor = Color(0xFF03A9F4),
+                    unfocusedLabelColor = Color.Gray
+                ),
+                textStyle = TextStyle(
+                    color = Color.White,
+                    fontSize = 14.sp
+                ),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier
+                    .width(150.dp)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(Color(0x9A121212), Color(0x9A121212))
+                        ),
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(horizontal = 0.dp, vertical = 6.dp) // Remove padding lateral
 
-        // Weight Input
-        TextField(
-            value = weight,
-            onValueChange = { weight = it },
-            label = { Text("Peso (kg)") },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
-            ),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent, // Fundo transparente para aplicar o gradiente
-                focusedIndicatorColor = Color(0xFF03A9F4), // Indicador azul quando focado
-                unfocusedIndicatorColor = Color(0xFFB0BEC5), // Indicador cinza quando desfocado
-                cursorColor = Color(0xFF03A9F4), // Cor do cursor
-                focusedLabelColor = Color(0xFF03A9F4), // Cor da label quando focada
-                unfocusedLabelColor = Color.Gray // Cor da label quando desfocada
-            ),
-            textStyle = TextStyle(
-                color = Color.Black, // Cor do texto
-                fontSize = 14.sp // Tamanho da fonte menor
-            ),
-            shape = RoundedCornerShape(16.dp), // Bordas arredondadas menores
-            modifier = Modifier
-                .width(150.dp) // Largura fixa para diminuir o tamanho
-                .align(Alignment.CenterHorizontally) // Centralizar horizontalmente
-                .padding(bottom = 4.dp) // Espaçamento externo reduzido
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(Color(0xFFE3F2FD), Color(0xFFBBDEFB))
-                    ),
-                    shape = RoundedCornerShape(16.dp) // Usando o mesmo arredondamento
-                )
-                .padding(horizontal = 8.dp, vertical = 6.dp) // Espaçamento interno ajustado
-        )
-
-
+            )
+        }
     }
 }
 
