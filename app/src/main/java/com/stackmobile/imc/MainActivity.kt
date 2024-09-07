@@ -100,7 +100,7 @@ fun IMCCalculatorApp() {
 
                     else -> {
                         message =
-                            if (isMale) "Obesidade Grau III ou Mórbida \n IMC: >40" else "Obesidade Grau III ou Mórbida \n IMC: >40"
+                            if (isMale) "Obesidade Grau III\n ou Mórbida IMC: >40" else "Obesidade Grau III\n ou Mórbida IMC: >40"
                         color = Color(0xFFF44336) // Red
                         imageResource = if (isMale) R.drawable.fotofem1 else R.drawable.fotomasc1
                     }
@@ -134,16 +134,17 @@ fun IMCCalculatorApp() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 0.dp), // Reduz o padding para ficar mais próximo do topo
             contentAlignment = Alignment.TopCenter // Alinha o conteúdo ao topo
         ) {
             Text(
                 text = texts[currentTextIndex],
                 color = Color.White,
-                fontSize = 30.sp,
+                fontSize = 39.sp,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }
+
     }
 
     Column(
@@ -219,7 +220,7 @@ fun IMCCalculatorApp() {
             TextField(
                 value = height,
                 onValueChange = { height = it },
-                label = { Text("Altura (cm)", color = Color.Gray) },
+                label = { Text("Peso (kg)") },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
